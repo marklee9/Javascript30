@@ -59,6 +59,22 @@
 
 <script>
 
+  window.addEventListener('keydown', function(e){
+    const audio = document.querySelector(`audio[data-key='${e.keyCode}']`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+    if (!audio) return;   // this will stop if no audio with that keyCode is found.
+
+    // Audio
+    audio.currentTime = 0;  // rewind the current audio to the start.
+    audio.play();
+
+    //Flashing Keys
+    key.classList.add('playing')
+})
+
+
+
 </script>
 
 
