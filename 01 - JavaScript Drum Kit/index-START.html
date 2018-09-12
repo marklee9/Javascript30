@@ -58,37 +58,25 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+window.addEventListener('keydown', function(e){
+  const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+  const audio = document.querySelector(`audio[data-key='${e.keyCode}']`);
+  if (!audio || !key) return;
+  key.classList.add('playing');
 
-function playSound(e) {
-    const audio = document.querySelector(`audio[data-key='${e.keyCode}']`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-
-    if (!audio) return;   // this will stop if no audio with that keyCode is found.
-
-    // Audio
-    audio.currentTime = 0;  // rewind the current audio to the start.
-    audio.play();
-
-    // using setTimeout is not preferred here because you have to
-    // if css and setTimeout does not match it will be off sync.
-
-    //Flashing Keys
-    key.classList.add('playing')
-};
-
-
-function removeTransition(e){
-  if (e.propertyName !== 'transform') return;
-  this.classList.remove('playing');
-};
-
-window.addEventListener('keydown', playSound);
-
-const keys = document.querySelectorAll(".key");
-keys.forEach((key) => {
-  key.addEventListener('transitionend', removeTransition);
+  audio.currentTime = 0;
+  audio.play();
 });
 
+function removePlaying(e) {
+  if (e.propertyName !== 'transform') return;
+  this.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach((key) => {
+  key.addEventListener('transitionend', removePlaying)
+});
 
 
 </script>
