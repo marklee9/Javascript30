@@ -59,31 +59,24 @@
 
 <script>
 
+// giving window an EventListener when there is a key down.
+window.addEventListener("keydown", (e) => {
+  let audio = document.querySelector(`audio[data-key='${e.keyCode}'`);
+  let key = document.querySelector(`.key[data-key='${e.keyCode}'`);
 
-function playSound(e){
-  let key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-  let audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-
-  if (audio) {
-    key.classList.add('playing')
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-function removeTransition(e) {
-  if (e.propertyName) {
-    e.target.classList.remove('playing');
-  }
-}
-
-window.addEventListener('keydown', playSound);
-
-const keys = document.querySelectorAll('.key');
-Array.from(keys).forEach((key) => {
-  key.addEventListener('transitionend', removeTransition);
+  if (!audio) return; // if audio is not found, return it.
+  audio.currentTime = 0;
+  audio.play();
+  key.classList.add("playing");
 });
 
+let keys = document.querySelectorAll(".key");
+
+keys.forEach((key) => {
+  key.addEventListener("transitionend", (e) => {
+    e.target.classList.remove("playing");
+  });
+});
 </script>
 
 
